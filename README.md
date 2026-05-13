@@ -12,7 +12,7 @@ The core logic follows the paper *"Autonomous Boids"* by Hartman and Beneš. In 
 * **Separation**: The tendency to avoid collisions with local flockmates.
 * **Cohesion**: The tendency to move toward the center of the local flock.
 * **Alignment**: The tendency to match the direction and speed of neighbors.
-* 
+
 ## Goals
 1. [x] Setup architecture with a `BoidManager` and decoupled classes.
 2. [ ] Implement classic Reynolds steers ($O(n^2)$ baseline).
