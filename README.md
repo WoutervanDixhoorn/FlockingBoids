@@ -1,10 +1,12 @@
 # BoidSim: Autonomous Flocking
 
-![Status](https://img.shields.io/badge/status-research--phase-orange) ![Language](https://img.shields.io/badge/language-C%2B%2B23-blue)
+![Status](https://img.shields.io/badge/status-development-green) ![Language](https://img.shields.io/badge/language-C%2B%2B23-blue)
 
 **BoidSim** is a real-time simulation of bird-like group behavior (Boids), based on Craig Reynolds' fundamental rules and extended with 
 modern research into autonomy. This project is developed in parallel with the [`Douter Graphics`](https://github.com/WoutervanDixhoorn/BoidSim/tree/main/vendor/DG) framework 
 to act as both a testbed and a primary use case for the framework.
+
+![Boid Simulation Preview](assets/images/readme/boids_window.png)
 
 ## The Simulation
 The core logic follows the paper *"Autonomous Boids"* by Hartman and Beneš. In addition to the three classic steering vectors, we implement:
@@ -15,7 +17,7 @@ The core logic follows the paper *"Autonomous Boids"* by Hartman and Beneš. In 
 
 ## Goals
 1. [x] Setup architecture with a `BoidManager` and decoupled classes.
-2. [ ] Implement classic Reynolds steers ($O(n^2)$ baseline).
+2. [x] Implement classic Reynolds steers ($O(n^2)$ baseline).
 3. [ ] Integrate the *Change of Leadership* logic from the source paper.
 4. [ ] Optimize visibility checks (spatial partitioning) to support hundreds of boids.
 5. [ ] Runtime parameter tuning (S, K, M factors) via a GUI.

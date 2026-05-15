@@ -4,19 +4,17 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-Boid::Boid(DG::Mesh* boidMesh, DG::Shader* drawingShader, glm::vec2 pos, glm::vec2 vel, float visibilityRadius)
+Boid::Boid(DG::Mesh* boidMesh, DG::Shader* drawingShader, glm::vec2 pos, glm::vec2 vel)
 {
 	m_mesh = boidMesh;
 	m_shader = drawingShader;
 	m_position = pos;
 	m_velocity = vel;
-	m_visibilityRadius = visibilityRadius;
 }
 
 void Boid::Update(float deltatime, float worldHeight, float worldWidth) {
 	m_position += m_velocity * deltatime;
 
-	//TODO: How dow we get the worldSize in here? Does the boid itself need to be aware of this?
 	if (m_position.x > worldWidth) m_position.x = -worldWidth;
 	else if (m_position.x < -worldWidth) m_position.x = worldWidth;
 
@@ -33,4 +31,13 @@ void Boid::Draw(DG::Camera& camera) {
 
 	m_shader->SetMat4("transform", transform);
 	m_mesh->Draw();
+}
+
+void Boid::ApplyForce(glm::vec2 force) {
+	m_velocity += force;
+
+	float speed = glm::length(m_velocity);
+	if (speed > 10.0f) { //TODO: Change for maxSpeed
+		m_velocity = (m_velocity / speed) * 10.0f;
+	}
 }

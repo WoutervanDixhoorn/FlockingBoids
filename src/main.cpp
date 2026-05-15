@@ -12,15 +12,21 @@
 #define WINDOW_HEIGHT 720
 #define WINDOW_TITLE "Boids Flocking"
 
-#define WORLD_SIZE 20.0f
+#define WORLD_SIZE 25.0f
 #define AMOUNT_BOIDS 100
 
 int main(void) {
     DG::Window window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
-
     DG::Camera camera = DG::Camera::Create2D(WINDOW_WIDTH, WINDOW_HEIGHT, WORLD_SIZE);
 
-    BoidManager boidManager{ AMOUNT_BOIDS, camera.GetHalfViewHeight(), camera.GetHalfViewWidth() };
+    FlockingSettings settings{
+        .seperationCoefficient = 0.2f,
+        .cohesionCoefficient = 0.8f,
+        .alignmentCoefficient = 0.8f,
+
+        .visibilityArea = 5.0f
+    };
+    BoidManager boidManager{ AMOUNT_BOIDS, camera.GetHalfViewHeight(), camera.GetHalfViewWidth(), &settings };
 
     while(!window.ShouldClose()) {
         window.UpdateDeltaTime();
