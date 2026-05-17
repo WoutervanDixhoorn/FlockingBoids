@@ -1,0 +1,34 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": ""
+    },
+    {
+	  "name": "WebAssembly-Debug",
+	  "generator": "Ninja",
+	  "configurationType": "Debug",
+	  "inheritEnvironments": [ "msvc_x64_x64" ],
+	  "buildRoot": "${projectDir}\\out\\build\\wasm-Debug",
+	  "installRoot": "${projectDir}\\out\\install\\wasm-Debug",
+	  "intelliSenseMode": "windows-clang-x64",
+	  "cmakeCommandArgs": "",
+	  "buildCommandArgs": "",
+	  "ctestCommandArgs": "",
+	  "variables": [
+		{
+		  "name": "CMAKE_TOOLCHAIN_FILE",
+		  "value": "C:/Users/woute/Desktop/Personal/Tools/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+		  "type": "FILEPATH"
+		}
+	  ]
+	}
+  ]
+}
