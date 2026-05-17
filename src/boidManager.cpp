@@ -69,7 +69,7 @@ void BoidManager::spawnBoids(int boidCount) {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    std::uniform_real_distribution<float> posDist(-20.0f, 20.0f);
+    std::uniform_real_distribution<float> posDist(-m_worldWidth, m_worldWidth);
     std::uniform_real_distribution<float> angleDist(0.0f, glm::two_pi<float>());
 
     float speed = 8.0f;

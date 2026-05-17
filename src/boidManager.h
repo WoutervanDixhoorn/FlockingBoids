@@ -4,9 +4,9 @@
 #include <optional>
 
 #include "boid.h"
-#include "mesh.h"
-#include "shader.h"
-#include "camera.h"
+#include "renderer/mesh.h"
+#include "renderer/shader.h"
+#include "renderer/camera.h"
 
 struct FlockingSettings {
 	float seperationCoefficient = 0.5f;
