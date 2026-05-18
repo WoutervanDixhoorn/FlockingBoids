@@ -15,8 +15,13 @@ add_executable(boid-sim ${SIM_SOURCES})
 if(EMSCRIPTEN)
     set_target_properties(boid-sim PROPERTIES SUFFIX ".html")
 	target_link_options(boid-sim PRIVATE 
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/assets@/assets"
-        "-sMAX_WEBGL_VERSION=2"
+		"--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/assets@/assets"
+		"-sMAX_WEBGL_VERSION=2"
+		"--shell-file" "${CMAKE_CURRENT_SOURCE_DIR}/shell.html"
+	)
+
+	set_property(TARGET boid-sim APPEND PROPERTY 
+        OBJECT_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/shell.html"
     )
 endif()
 
@@ -28,4 +33,6 @@ add_custom_target(CopyAssets
         "${CMAKE_CURRENT_SOURCE_DIR}/assets"
         "$<TARGET_FILE_DIR:boid-sim>/assets"
 )
+if(NOT EMSCRIPTEN)
 add_dependencies(boid-sim CopyAssets)
+endif()

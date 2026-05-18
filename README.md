@@ -30,8 +30,30 @@ The core logic follows the paper *"Autonomous Boids"* by Hartman and Beneš. In 
 
 ### Usage
 1. Clone the repository.
-2. Open the folder in Visual Studio (native CMake support).
-3. Build the `boid-sim` target. Assets are automatically copied to the output folder via a custom build step.
+2. Create your own CMakeUserPresets.json. Paste the following template and update the paths to match your local Emscripten installation:
+```json
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "wasm-debug",
+      "displayName": "WebAssembly Debug",
+      "description": "Local Emscripten setup",
+      "inherits": "wasm-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "C:/PATH_TO_EMSDK/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+        "CMAKE_C_COMPILER": "C:/PATH_TO_EMSDK/emsdk/upstream/emscripten/emcc.bat",
+        "CMAKE_CXX_COMPILER": "C:/PATH_TO_EMSDK/emsdk/upstream/emscripten/em++.bat",
+        "CMAKE_CXX_FLAGS": "-std=c++23",
+        "CMAKE_C_FLAGS": "-std=c23"
+      }
+    }
+  ]
+}
+```
+3. Open the folder in Visual Studio (native CMake support).
+4. Build the `boid-sim` target. Assets are automatically copied to the output folder via a custom build step.
 
 ## References
 * **Hartman & Beneš (2006)**: *Autonomous Boids* - Primary source for the leadership implementation.
