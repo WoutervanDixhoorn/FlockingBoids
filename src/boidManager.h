@@ -6,7 +6,6 @@
 #include "boid.h"
 #include "renderer/mesh.h"
 #include "renderer/shader.h"
-#include "renderer/camera.h"
 
 struct FlockingSettings {
 	float seperationCoefficient = 0.5f;
@@ -21,7 +20,7 @@ public:
 	BoidManager(int boidCount, float worldHeight, float worldWidth, FlockingSettings* settings);
 
 	void Update(float deltaTime);
-	void Draw(DG::Camera& camera);
+	void Draw();
 private:
 	void initializeBoidMesh();
 	void spawnBoids(int boidCount);
@@ -41,5 +40,4 @@ private:
 	std::vector<Boid> m_nextBoids;
 
 	std::optional<DG::Mesh> m_boidMesh;
-	DG::Shader m_boidShader;
 };

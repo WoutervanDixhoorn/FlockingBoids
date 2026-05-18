@@ -17,7 +17,7 @@
 #define WINDOW_TITLE "Boids Flocking"
 
 #define WORLD_SIZE 50.0f
-#define AMOUNT_BOIDS 100
+#define AMOUNT_BOIDS 25
 
 class BoidsLayer : public DG::Layer {
 public:
@@ -33,8 +33,8 @@ public:
             .visibilityArea = 5.0f
         }),
         m_boidManager({ AMOUNT_BOIDS,
-          m_camera.GetHalfViewHeight(),
-          m_camera.GetHalfViewWidth(),
+          m_camera.GetViewHeight(),
+          m_camera.GetViewWidth(),
           &m_settings
         })
     {}
@@ -45,10 +45,15 @@ public:
     void OnDettach() override {}
 
     void OnUpdate(float deltaTime) override {
-        DG::Renderer::Clear(0.2f, 0.3f, 0.3f, 1.0f);
+        DG::Renderer2D::Clear(0.2f, 0.3f, 0.3f, 1.0f);
 
         m_boidManager.Update(deltaTime);
-        m_boidManager.Draw(m_camera);
+
+        DG::Renderer2D::BeginScene(m_camera);
+
+        m_boidManager.Draw();
+
+        DG::Renderer2D::EndScene();
     }
 
     void OnGuiDraw() override {
@@ -73,6 +78,8 @@ public:
     FlockingSimulation()
         : DG::Application({ .windowWidth = WINDOW_WIDTH, .windowHeight = WINDOW_HEIGHT, .windowTitle = WINDOW_TITLE })
     { 
+        DG::Renderer2D::Init();
+
         PushLayer(std::make_unique<BoidsLayer>());
     }  
 };

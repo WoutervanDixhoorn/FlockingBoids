@@ -8,10 +8,10 @@
 
 class Boid {
 public:
-	Boid(DG::Mesh* boidMesh, DG::Shader* drawingShader, glm::vec2 pos, glm::vec2 vel);
+	Boid(DG::Mesh* boidMesh, glm::vec2 pos, glm::vec2 vel);
 
 	void Update(float deltatime, float worldHeight, float worldWidth);
-	void Draw(DG::Camera& camera);
+	void Draw();
 
 	inline glm::vec2 GetPosition() const { return m_position; };
 	inline glm::vec2 GetVelocity() const { return m_velocity; };
@@ -23,5 +23,4 @@ private:
 	glm::vec2 m_velocity;
 
 	DG::Mesh* m_mesh;
-	DG::Shader* m_shader;
 };

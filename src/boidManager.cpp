@@ -1,26 +1,28 @@
 #include "boidManager.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
 #include <cmath>
 #include <random>
 #include <print>
 
-static float boidVertices[8] = {
-   -0.5f,  0.5f,
-    0.0f,  0.3f,
-    0.5f,  0.5f,
-    0.0f, -0.5f
+#include "renderer/rendererTypes.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+static std::vector<DG::Vertex> boidVertices = {
+   {{ -0.5f,  0.5f }},
+   {{  0.0f,  0.3f }},
+   {{  0.5f,  0.5f }},
+   {{  0.0f, -0.5f }},
 };
 
-static uint32_t boidIndices[6] = {
+static std::vector<uint32_t> boidIndices = {
     0, 1, 3,
-    2, 1, 3
+    1, 2, 3
 };
 
 BoidManager::BoidManager(int boidCount, float worldHeight, float worldWidth, FlockingSettings* settings) 
-    : m_boidShader(DG::Shader::LoadFromFile("assets/shaders/basic.glsl")), m_worldHeight(worldHeight), m_worldWidth(worldWidth), m_settings(settings)
+    : m_worldHeight(worldHeight), m_worldWidth(worldWidth), m_settings(settings)
 {
     initializeBoidMesh();
 	spawnBoids(boidCount);
@@ -34,27 +36,16 @@ void BoidManager::Update(float deltaTime) {
     }
 }
 
-void BoidManager::Draw(DG::Camera& camera) {
-    m_boidShader.SetMat4("camera", camera.GetCameraMatrix());
-    
+void BoidManager::Draw() { 
     for (auto& b : m_boids) {
-        b.Draw(camera);
+        b.Draw();
     }
 }
 
 void BoidManager::initializeBoidMesh() {
-    DG::VertexLayout layout;
-    layout.AddAttribute(DG::FLOAT_ATTRIB, 2);
-
-    DG::MeshData meshData {
-       .vertexData = boidVertices,
-       .vertexSize = 2 * sizeof(float),
-       .vertexCount = 4,
-
-       .indexData = boidIndices,
-       .indexCount = sizeof(boidIndices),
-
-       .vertexLayout = layout
+    DG::MeshData meshData{
+        .Vertices = boidVertices,
+        .Indices = boidIndices
     };
 
     m_boidMesh = DG::Mesh::Create(meshData);
@@ -69,7 +60,7 @@ void BoidManager::spawnBoids(int boidCount) {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    std::uniform_real_distribution<float> posDist(-m_worldWidth, m_worldWidth);
+    std::uniform_real_distribution<float> posDist(0.0f, m_worldWidth);
     std::uniform_real_distribution<float> angleDist(0.0f, glm::two_pi<float>());
 
     float speed = 8.0f;
@@ -80,7 +71,7 @@ void BoidManager::spawnBoids(int boidCount) {
 
         glm::vec2 vel(cos(angle) * speed, sin(angle) * speed);
 
-        m_boids.push_back({ &m_boidMesh.value(), &m_boidShader, pos, vel});
+        m_boids.push_back({ &m_boidMesh.value(), pos, vel});
     }
 }
 
@@ -102,7 +93,6 @@ std::vector<Boid*> BoidManager::getBoidNeighbours(const Boid& boid)
 
 void BoidManager::updateFlocking()
 {
-    //Copy currentBoids into the nextBoids. m_boids is what we draw, nextBoids is what we mutate
     m_nextBoids = m_boids;
 
     for (size_t i = 0; i < m_boids.size(); ++i) {
@@ -123,7 +113,6 @@ void BoidManager::updateFlocking()
         b_mutate.ApplyForce(steer);
     }
 
-    //Swap!!
     m_boids = m_nextBoids;
 }
 
