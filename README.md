@@ -20,7 +20,7 @@ The core logic follows the paper *"Autonomous Boids"* by Hartman and Beneš. In 
 2. [x] Implement classic Reynolds steers ($O(n^2)$ baseline).
 3. [ ] Integrate the *Change of Leadership* logic from the source paper.
 4. [ ] Optimize visibility checks (spatial partitioning) to support hundreds of boids.
-5. [ ] Runtime parameter tuning (S, K, M factors) via a GUI.
+5. [x] Runtime parameter tuning (S, K, M factors) via a GUI.
 
 ## Getting Started
 
