@@ -6,18 +6,18 @@
 #include "core/Layer.h"
 #include "renderer/camera.h"
 #include "renderer/renderer.h"
+#include "renderer/debugRenderer.h"
 
 #include "imgui.h"
 
 #include "boidManager.h"
 
-
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define WINDOW_TITLE "Boids Flocking"
 
-#define WORLD_SIZE 50.0f
-#define AMOUNT_BOIDS 25
+#define WORLD_SIZE 200.0f
+#define AMOUNT_BOIDS 500
 
 class BoidsLayer : public DG::Layer {
 public:
@@ -30,7 +30,7 @@ public:
             .seperationCoefficient = 0.4f,
             .cohesionCoefficient = 0.8f,
             .alignmentCoefficient = 0.8f,
-            .visibilityArea = 5.0f
+            .visibilityArea = 10.0f
         }),
         m_boidManager({ AMOUNT_BOIDS,
           m_camera.GetViewHeight(),
@@ -60,9 +60,15 @@ public:
         ImGui::SetNextWindowSize(ImVec2(250.0f, 100.0f), ImGuiCond_FirstUseEver);
 
         ImGui::Begin("Flocking Parameters");
-        ImGui::SliderFloat("Seperation", &m_settings.seperationCoefficient, 0.0f, 1.0f);
-        ImGui::SliderFloat("Cohesion", &m_settings.cohesionCoefficient, 0.0f, 1.0f);
-        ImGui::SliderFloat("Alignment", &m_settings.alignmentCoefficient, 0.0f, 1.0f);
+        ImGui::SliderFloat("Seperation", &m_settings.seperationCoefficient, 0.0f, 2.0f);
+        ImGui::SliderFloat("Cohesion", &m_settings.cohesionCoefficient, 0.0f, 2.0f);
+        ImGui::SliderFloat("Alignment", &m_settings.alignmentCoefficient, 0.0f, 2.0f);
+        ImGui::End();
+
+        ImGui::Begin("Debug Rendering");
+        ImGui::Checkbox("Draw Grid", &m_settings.drawGrid);
+        //ImGui::Checkbox("Draw ViewFrustum", &m_settings.drawViewFrustum);
+        ImGui::Checkbox("Draw Circle", &m_settings.drawViewCircle);
         ImGui::End();
     }
 
