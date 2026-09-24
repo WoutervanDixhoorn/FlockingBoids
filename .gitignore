@@ -8,6 +8,10 @@ build/
 *.vcxproj
 *.filters
 
+
+# --- CLion ---
+.idea/
+
 # --- CMake ---
 CMakeCache.txt
 CMakeFiles/
